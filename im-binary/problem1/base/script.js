@@ -10,7 +10,7 @@ async function fetchPosts() {
   }
 }
 
-for (let i = 1; i <= 5; i++) {
+for (let i = 1; i <= 10; i++) {
   const option = document.createElement("option");
   option.value = i;
   option.textContent = `작성자 ${i}`;
