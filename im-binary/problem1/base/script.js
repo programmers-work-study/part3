@@ -20,6 +20,9 @@ for (let i = 1; i <= 5; i++) {
 function renderPosts(posts) {
   const postList = document.getElementById("postList");
 
+  // 이전에 추가된 postList 에 추가된 post들 제거
+  postList.innerHTML = "";
+
   posts.forEach((post) => {
     const div = document.createElement("div");
     const h3 = document.createElement("h3");
@@ -35,7 +38,6 @@ function renderPosts(posts) {
 async function init() {
   const posts = await fetchPosts();
   renderPosts(posts);
-  console.log(renderPosts(posts));
 
   document
     .getElementById("authorFilter")
@@ -45,7 +47,7 @@ async function init() {
         renderPosts(posts);
       } else {
         renderPosts(
-          posts.filter((post) => post.userId.toString() === selectedAuthor + 1)
+          posts.filter((post) => post.userId === Number(selectedAuthor))
         );
       }
     });
