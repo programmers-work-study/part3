@@ -17,9 +17,25 @@ for (let i = 1; i <= 5; i++) {
   document.getElementById("authorFilter").appendChild(option);
 }
 
+function renderPosts(posts) {
+  const postList = document.getElementById("postList");
+
+  posts.forEach((post) => {
+    const div = document.createElement("div");
+    const h3 = document.createElement("h3");
+    const p = document.createElement("p");
+    h3.textContent = `작성자 ${post.userId}: ${post.title}`;
+    p.textContent = `${post.body}`;
+
+    div.append(h3, p);
+    postList.appendChild(div);
+  });
+}
+
 async function init() {
   const posts = await fetchPosts();
   renderPosts(posts);
+  console.log(renderPosts(posts));
 
   document
     .getElementById("authorFilter")
