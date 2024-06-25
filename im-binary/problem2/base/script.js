@@ -1,11 +1,24 @@
+const todos = [];
+
+const input = document.getElementById("newTodo");
+const todoList = document.getElementById("todoList");
+
 function addTodo() {
-  // 여기에 기능을 구현하세요.
+  todos.push(input.value);
+  input.value = '';
+  renderTodos();
 }
 
 function deleteTodo(index) {
-  // 여기에 기능을 구현하세요.
+  todos.splice(index, 1);
+  renderTodos();
 }
 
 function renderTodos() {
-  // 여기에 기능을 구현하세요.
+  todoList.innerHTML = todos.map((todo, index) => {
+    return `<li class="todo">
+      <span>${todo}</span>
+      <button onclick="deleteTodo(${index})">삭제</button>
+    </li>`;
+  }).join('');
 }
