@@ -10,7 +10,7 @@ async function fetchPosts() {
   }
 }
 
-for (let i = 1; i <= 5; i++) {
+for (let i = 1; i <= 10; i++) {
   const option = document.createElement("option");
   option.value = i;
   option.textContent = `작성자 ${i}`;
@@ -21,14 +21,32 @@ async function init() {
   const posts = await fetchPosts();
   renderPosts(posts);
 
-  document.getElementById("authorFilter").addEventListener("change", function () {
-    const selectedAuthor = this.value;
+  document.getElementById("authorFilter").addEventListener("change", function (event) {
+    const selectedAuthor = event.target.value;
     if (selectedAuthor === "all") {
       renderPosts(posts);
     } else {
-      renderPosts(posts.filter((post) => post.userId.toString() === selectedAuthor + 1));
+      renderPosts(posts.filter((post) => post.userId.toString() === selectedAuthor));
     }
   });
 }
 
 init();
+
+function renderPosts(posts) {
+  const $postList = document.querySelector("#postList");
+  if ($postList) {
+    $postList.innerHTML = posts
+      .map(
+        (post) => `
+    <div>
+      <h3>작성자 ${post.userId}</h3>
+      <h3>${post.title}</h3>
+      <p>
+      ${post.body}
+      </p>
+    </div>`
+      )
+      .join("");
+  }
+}
