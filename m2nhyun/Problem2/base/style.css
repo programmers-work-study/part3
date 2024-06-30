@@ -1,5 +1,5 @@
 #app {
-    width: 300px;
+    width: 450px;
     margin: auto;
     font-family: Arial, sans-serif;
   }
@@ -12,8 +12,10 @@
     list-style-type: none;
     padding: 0;
   }
-  
   li {
     margin: 10px 0;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
   }
   
