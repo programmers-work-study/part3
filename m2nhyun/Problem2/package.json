@@ -4,22 +4,21 @@
     "description": "Todo List 기능 구현하기",
     "main": "script.js",
     "directories": {
-      "test": "tests"
+        "test": "tests"
     },
     "scripts": {
-      "install": "npx playwright install --with-deps chromium",
-      "test": "npx playwright test tests/problems.spec.js",
-      "start": "serve base/",
-      "test-server": "http-server -p 5500"
+        "install": "npx playwright install --with-deps chromium",
+        "test": "npx playwright test tests/problems.spec.js",
+        "start": "serve base/",
+        "test-server": "http-server -p 5500"
     },
     "author": "programmers.co.kr",
     "license": "ISC",
     "devDependencies": {
-      "@playwright/test": "^1.37.1"
+        "@playwright/test": "^1.45.0"
     },
     "dependencies": {
-      "serve": "^13.0.2",
-      "http-server": "^14.1.1"
+        "http-server": "^14.1.1",
+        "serve": "^13.0.2"
     }
-  }
-  
+}
