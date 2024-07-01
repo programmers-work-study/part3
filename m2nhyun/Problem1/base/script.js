@@ -1,48 +1,55 @@
-// 주어진 문제를 해결하기 위해 적절하게 코드를 수정 & 보완해주세요.
-
 async function fetchPosts() {
   try {
     const response = await fetch("./data/input/posts.json");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const data = await response.json();
     return data;
   } catch (error) {
     console.error(`에러 발생: ${error}`, error);
-    return undefined; // Undefined 로 에러처리하기
+    return null; // undefined 대신 null 반환
   }
 }
 
-for (let i = 1; i <= 5; i++) {
-  const option = document.createElement("option");
-  option.value = i;
-  option.textContent = `작성자 ${i}`;
-  document.getElementById("authorFilter").appendChild(option);
+function createAuthorOptions() {
+  const authorFilter = document.getElementById("authorFilter");
+  if (!authorFilter) return;
+
+  for (let i = 1; i <= 10; i++) {
+    const option = document.createElement("option");
+    option.value = i.toString();
+    option.textContent = `작성자 ${i}`;
+    authorFilter.appendChild(option);
+  }
 }
 
 async function init() {
+  createAuthorOptions();
   const posts = await fetchPosts();
 
-  // posts 없을때 오류처리
+  const postList = document.getElementById("postList");
+  if (!postList) return;
+
   if (!posts) {
-    document.getElementById("postList").innerHTML =
-      "게시글을 불러오는 중 오류가 발생했습니다.";
+    postList.innerHTML = "게시글을 불러오는 중 오류가 발생했습니다.";
     return;
   }
+
   renderPosts(posts);
 
-  document
-    .getElementById("authorFilter")
-    .addEventListener("change", function () {
+  const authorFilter = document.getElementById("authorFilter");
+  if (authorFilter) {
+    authorFilter.addEventListener("change", function () {
       const selectedAuthor = this.value;
-      // 삼항연산자로 post 내보낼때 필터해서 내보내기
       const filteredPosts =
         selectedAuthor === "all"
           ? posts
           : posts.filter((post) => post.userId.toString() === selectedAuthor);
       renderPosts(filteredPosts);
     });
+  }
 }
-
-init();
 
 function renderPosts(posts) {
   const postList = document.getElementById("postList");
@@ -52,15 +59,18 @@ function renderPosts(posts) {
 
   posts.forEach((post) => {
     const div = document.createElement("div");
+    div.className = "post-card";
 
     const h3 = document.createElement("h3");
     h3.id = `post-title-${post.id}`;
+    h3.textContent = `작성자 ${post.userId}: ${post.title}`;
 
     const p = document.createElement("p");
-    p.textContent = `${post.body}`;
+    p.textContent = post.body;
 
     div.append(h3, p);
-    h3.textContent = `작성자 ${post.userId}: ${post.title}`;
     postList.appendChild(div);
   });
 }
+
+init();
